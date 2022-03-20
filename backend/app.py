@@ -1,9 +1,11 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash, check_password_hash
+
 # from routes import init_app_route
 from config import DevConfig
-from models import Recipe
+from models import Recipe, User
 from exts import db
 
 app = Flask(__name__)
@@ -25,11 +27,47 @@ recipe_model = api.model(
     }
 )
 
-
+signup_model = api.model(
+  "signUp",
+  {
+    "username": fields.String(),
+    "email": fields.String(),
+    "password": fields.String()
+  }
+)
 @api.route('/hello')
 class HellowResorce(Resource):
   def get(self):
     return {'msg': 'hellowwwwww'}
+  
+@api.route('/signup')
+class Signup(Resource):
+  # @api.marshal_with(signup_model)
+  @api.expect(signup_model)
+  def post(self):
+    signup_data = request.get_json()
+    username = signup_data.get('username')
+    db_user = User.query.filter_by(username=username).first()
+    
+    if db_user is not None:
+      return jsonify({'message': f'User with username {username} already exist'})
+    
+    
+    new_user = User (
+      username = username,
+      email = signup_data.get('email'),
+      password =  generate_password_hash(signup_data.get('password')),
+    )
+    new_user.save()
+    
+    # return new_user, 201
+    return jsonify({ 'message': f'User {username} created Successfully' })
+
+@api.route('/login')
+class Login(Resource):
+  def post(self):
+    pass
+
 
 @api.route('/recipes')
 class RecipeResource(Resource):
@@ -40,6 +78,7 @@ class RecipeResource(Resource):
     return recipes
 
   @api.marshal_with(recipe_model)
+  @api.expect(recipe_model)
   def post(self):
     """ post a recipe"""
     data = request.get_json()

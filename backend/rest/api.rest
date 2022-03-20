@@ -3,7 +3,16 @@
 @url1 = recipes
 @url2 = recipe
 
- 
+######################################
+POST {{host}}/signup
+Content-Type: application/json
+
+{
+  "username": "vnk1",
+  "email": "vnk1@vnk.com",
+  "password": "password"
+}
+#####################################
 GET {{host}}{{url1}}
 
 ################################

@@ -75,3 +75,55 @@ login
   flask db init --> generate migrations folder
   flask db migrate -m "added user table"
   flask db upgrade
+
+=========================================================
+JWT Authentication
+=========================================================
+
+1. pip install flask_jwt_extended
+2. 
+  @api.route('/signup')
+  class Signup(Resource):
+    def post(self):
+      pass
+
+  @api.route('/login')
+  class Login(Resource):
+    def post(self):
+      pass
+3. from models import User
+4. sign up
+
+@api.route('/signup')
+class Signup(Resource):
+  # @api.marshal_with(signup_model)
+  @api.expect(signup_model)
+  def post(self):
+    signup_data = request.get_json()
+    username = signup_data.get('username')
+    db_user = User.query.filter_by(username=username).first()
+    
+    if db_user is not None:
+      return jsonify({'message': f'User with username {username} already exist'})
+    
+    
+    new_user = User (
+      username = username,
+      email = signup_data.get('email'),
+      password =  generate_password_hash(signup_data.get('password')),
+    )
+    new_user.save()
+    
+    # return new_user, 201
+    return jsonify({ 'message': f'User {username} created Successfully' })
+
+
+  #model serializer
+  signup_model = api.model(
+    "signUp",
+    {
+      "username": fields.String(),
+      "email": fields.String(),
+      "password": fields.String()
+    }
+  )
