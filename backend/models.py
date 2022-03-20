@@ -1,3 +1,4 @@
+from datetime import datetime
 from exts import db
 
 """
@@ -43,6 +44,7 @@ class User(db.Model):
   username = db.Column(db.String(25), unique=True, nullable=False)
   email = db.Column(db.String(80), nullable=False)
   password = db.Column(db.Text(), nullable=False)
+  date = db.Column(db.Date(), nullable=False, default=datetime.utcnow)
   
   def __repr__(self) -> str:
       return f"<User {self.username}>"

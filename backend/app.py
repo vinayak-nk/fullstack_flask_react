@@ -36,7 +36,8 @@ signup_model = api.model(
   {
     "username": fields.String(),
     "email": fields.String(),
-    "password": fields.String()
+    "password": fields.String(),
+    "date": fields.Date()
   }
 )
 @api.route('/hello')
