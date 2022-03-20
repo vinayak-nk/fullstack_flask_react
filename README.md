@@ -61,3 +61,17 @@ recipe_model = api.model(
 )
 10. creare routes
 
+==========================================================
+login
+
+1. create User Model
+2. pip install flask_migrate
+3. app.py
+  from flask_migrate import Migrate
+
+  migrate=Migrate(app, db)
+  flask shell
+
+  flask db init --> generate migrations folder
+  flask db migrate -m "added user table"
+  flask db upgrade

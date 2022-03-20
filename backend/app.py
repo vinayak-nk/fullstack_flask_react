@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_restx import Api, Resource, fields
-
+from flask_migrate import Migrate
 # from routes import init_app_route
 from config import DevConfig
 from models import Recipe
@@ -11,6 +11,7 @@ app.config.from_object(DevConfig)
 # init_app_route(app)
 
 db.init_app(app)
+migrate=Migrate(app, db)
 
 api = Api(app, doc='/docs')
 
@@ -86,3 +87,4 @@ def make_shell_context():
 
 if __name__ == '__main__':
   app.run()
+  # app.run(debug = False, host='0.0.0.0', port= '9090')
