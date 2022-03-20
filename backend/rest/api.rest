@@ -1,0 +1,33 @@
+
+@host = http://127.0.0.1:5000/
+@url1 = recipes
+@url2 = recipe
+
+ 
+GET {{host}}{{url1}}
+
+################################
+POST  {{host}}{{url1}}
+Content-Type: application/json
+
+{
+  "title": "test2",
+  "description": "test2"
+}
+
+################################
+
+PUT  {{host}}{{url2}}/3
+Content-Type: application/json
+
+{
+  "title": "test3",
+  "description": "test3pqr"
+}
+
+###############################
+
+GET  {{host}}{{url2}}/5
+
+###############################
+DELETE {{host}}{{url2}}/1

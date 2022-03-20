@@ -1,6 +1,19 @@
 from flask_restx import Api, Resource
+from app import api
+from flask_restx import Resource, fields
+
+#model (serialiser)
+recipe_model = api.model(
+  "Recipe",
+    {
+      'id': fields.Integer(),
+      'title': fields.String(),
+      'description': fields.String()
+    }
+)
 
 class RecipeResource(Resource):
+  @api.marshal_list_with(recipe_model)
   def get(self):
     """ get all recipes"""
     return 'hello'
