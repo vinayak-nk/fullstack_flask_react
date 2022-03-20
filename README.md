@@ -127,3 +127,36 @@ class Signup(Resource):
       "password": fields.String()
     }
   )
+
+
+  ==========
+  JWT
+  ==========
+  from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
+  
+  JWTManager(app)
+
+  login_model = api.model(
+    "Login", 
+    {
+      "username": fields.String(),
+      "password": fields.String()    
+    }
+  )
+
+  @api.route('/login')
+  class Login(Resource):
+    @api.expect(login_model)
+    def post(self):
+      data= request.get_json()
+      username = data.get('username')
+      password =  data.get('password'),
+      db_user = User.query.filter_by(username=username).first()
+      # if db_user and check_password_hash(db_user.password, password):
+      access_token = create_access_token(identity=db_user.username)
+      refresh_token = create_refresh_token(identity=db_user.username)
+        
+      return jsonify({ 'access_token': access_token, 'refresh_token': refresh_token })
+
+  >> @jwt_required()
+==============================================================================================

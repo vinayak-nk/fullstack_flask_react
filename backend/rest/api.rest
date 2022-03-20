@@ -2,7 +2,7 @@
 @host = http://127.0.0.1:5000/
 @url1 = recipes
 @url2 = recipe
-
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0Nzc5MjQ4MSwianRpIjoiNTgzNmZhYzAtNzZhNC00ZTI5LWI4OTItMDAwYjU0MjRmOTY5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InZuazEiLCJuYmYiOjE2NDc3OTI0ODEsImV4cCI6MTY0Nzc5MzM4MX0.7trK4iL68J31dxnqRKGARik4fvpOQQYfezAL1j1H6CA
 ######################################
 POST {{host}}/signup
 Content-Type: application/json
@@ -12,6 +12,15 @@ Content-Type: application/json
   "email": "vnk1@vnk.com",
   "password": "password"
 }
+#####################################
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "vnk1",
+  "password": "password"
+}
+
 #####################################
 GET {{host}}{{url1}}
 
@@ -36,7 +45,7 @@ Content-Type: application/json
 
 ###############################
 
-GET  {{host}}{{url2}}/5
-
+GET  {{host}}{{url2}}/1
+Authorization: Bearer {{token}}
 ###############################
 DELETE {{host}}{{url2}}/1

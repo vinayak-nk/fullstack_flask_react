@@ -1,7 +1,10 @@
+from os import access
 from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
 
 # from routes import init_app_route
 from config import DevConfig
@@ -14,6 +17,7 @@ app.config.from_object(DevConfig)
 
 db.init_app(app)
 migrate=Migrate(app, db)
+JWTManager(app)
 
 api = Api(app, doc='/docs')
 
@@ -63,10 +67,29 @@ class Signup(Resource):
     # return new_user, 201
     return jsonify({ 'message': f'User {username} created Successfully' })
 
+login_model = api.model(
+  "Login", 
+  {
+    "username": fields.String(),
+    "password": fields.String()    
+  }
+)
+
 @api.route('/login')
 class Login(Resource):
+  @api.expect(login_model)
   def post(self):
-    pass
+    data= request.get_json()
+    username = data.get('username')
+    password =  data.get('password'),
+    db_user = User.query.filter_by(username=username).first()
+    # if db_user and check_password_hash(db_user.password, password):
+    access_token = create_access_token(identity=db_user.username)
+    refresh_token = create_refresh_token(identity=db_user.username)
+      
+    return jsonify({ 'access_token': access_token, 'refresh_token': refresh_token })
+      
+    
 
 
 @api.route('/recipes')
@@ -79,6 +102,7 @@ class RecipeResource(Resource):
 
   @api.marshal_with(recipe_model)
   @api.expect(recipe_model)
+  @jwt_required()
   def post(self):
     """ post a recipe"""
     data = request.get_json()
@@ -94,12 +118,14 @@ class RecipeResource(Resource):
 @api.route('/recipe/<int:id>')
 class RecipeResource(Resource):
   @api.marshal_with(recipe_model)
+  @jwt_required()
   def get(self,id):
     """get recipe by id"""
     recipe_to_get = Recipe.query.get_or_404(id)
     return recipe_to_get
 
   @api.marshal_with(recipe_model)
+  @jwt_required()
   def put(self,id):
     """set recipe by id"""
     recipe_to_update = Recipe.query.get_or_404(id)
@@ -109,6 +135,7 @@ class RecipeResource(Resource):
     return recipe_to_update, 201
 
   @api.marshal_with(recipe_model)
+  @jwt_required()
   def delete(self,id):
     """set recipe by id"""
     recipe_to_delete = Recipe.query.get_or_404(id)
