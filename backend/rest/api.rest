@@ -22,6 +22,11 @@ Content-Type: application/json
 }
 
 #####################################
+@token= eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0Nzg2MjA4OCwianRpIjoiZjVmYjhkYjgtMWIyYS00ZjE0LTljZDUtN2Q4ZDA2NDNiMDMwIiwidHlwZSI6InJlZnJlc2giLCJzdWIiOiJ2bmsxIiwibmJmIjoxNjQ3ODYyMDg4LCJleHAiOjE2NTA0NTQwODh9.RjhDch2FvvH73RKA5tXOKjQ4iOTHWFze4tuxeTpkyPc
+POST {{host}}/auth/refresh
+Authorization: Bearer {{token}}
+
+#####################################
 GET {{host}}{{url1}}
 
 ################################
