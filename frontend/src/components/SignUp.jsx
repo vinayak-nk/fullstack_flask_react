@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
 
-  const submitForm = () => {
-    console.log('submit')
-
-    setUsername('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
+  const submitForm = (data) => {
+    console.log('submit', data)
+    reset()
   }
+
+  console.log(watch('username'))
+  console.log(watch('email'))
+  console.log(watch('password'))
+  console.log(watch('confirmPassword'))
 
   return (
     <div className='container'>
@@ -24,26 +23,31 @@ const SignUp = () => {
         <form action="">
           <Form.Group>
             <Form.Label>Username</Form.Label>
-            <Form.Control type="text" placeholder='enter your username' value={username} name='username' onChange={(e) => setUsername(e.target.value)} />
+            <Form.Control type="text" placeholder='enter your username' {...register("username", {required: true, maxLength:25})} />
           </Form.Group>
+          {errors.username && <span style={{ color: 'red' }} >User name is required</span>}
           <br />
+          {errors.username?.type=="maxLength" && <span style={{ color: 'red' }} >max length exceded</span>}
           <Form.Group>
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder='enter your email' value={email} name='email' onChange={(e) => setEmail(e.target.value)} />
+            <Form.Control type="email" placeholder='enter your email' {...register("email", {required:true, maxLength:80})} />
           </Form.Group>
+          {errors.username && <span style={{ color: 'red' }} >Email is required</span>}
           <br />
           <Form.Group>
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder='enter your password' value={password} name='password' onChange={(e) => setPassword(e.target.value)} />
+            <Form.Control type="password" placeholder='enter your password' {...register("password", {required:true, minLength:4})} />
           </Form.Group>
+          {errors.username && <span style={{ color: 'red' }} >Password is required</span>}
           <br />
           <Form.Group>
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control type="password" placeholder='enter your password' value={confirmPassword} name='confirmPassword' onChange={(e) => setConfirmPassword(e.target.value)} />
+            <Form.Control type="password" placeholder='enter your password'  {...register("confirmPassword", { required: true, minLength: 4 })}/>
           </Form.Group>
+          {errors.username && <span style={{ color: 'red' }} >Password is required</span>}
           <br />
           <Form.Group>
-            <Button as="sub" variant="primary" onClick={submitForm}>
+            <Button as="sub" variant="primary" onClick={handleSubmit(submitForm)}>
               Sign Up
             </Button>
           </Form.Group>
