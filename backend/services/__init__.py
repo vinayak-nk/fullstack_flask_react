@@ -7,7 +7,7 @@ from flask_jwt_extended import jwt_required, JWTManager
 from models import Recipe
 
 
-recipe_ns = Namespace('recipe', description="A namespace for Recipes Model")
+recipe_ns = Namespace('api', description="A namespace for Recipes Model")
 
 #model (serialiser)
 recipe_model = recipe_ns.model(
