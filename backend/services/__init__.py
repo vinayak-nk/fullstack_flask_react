@@ -19,6 +19,11 @@ recipe_model = recipe_ns.model(
     }
 )
 
+@recipe_ns.route('/hello')
+class HellowResorce(Resource):
+  def get(self):
+    return {'msg': 'hellowwwwww'}   
+
 @recipe_ns.route('/recipes')
 class RecipeResource(Resource):
   @recipe_ns.marshal_list_with(recipe_model)
