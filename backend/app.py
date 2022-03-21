@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restx import Api
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from models import Recipe, User
 from exts import db
@@ -14,6 +15,8 @@ def create_app(config):
   app = Flask(__name__)
   app.config.from_object(config)
   # init_app_route(app)
+  
+  CORS(app)
 
   db.init_app(app)
   migrate=Migrate(app, db)
