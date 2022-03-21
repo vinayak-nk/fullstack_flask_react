@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from flask_restx import Resource, Namespace, fields
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required, JWTManager
@@ -46,7 +46,7 @@ class Signup(Resource):
     new_user.save()
     
     # return new_user, 201
-    return jsonify({ 'message': f'User {username} created Successfully' })
+    return make_response(jsonify({ 'message': f'User {username} created Successfully' }), 201)
 
 
 @auth_ns.route('/login')
