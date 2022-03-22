@@ -7,7 +7,7 @@ const LoggedInLinks = () => {
     <>
       <Link className="nav-link active" to="/" aria-current="page" href="#">Home</Link>
       <a className="nav-link active" href='#' onClick={() => logout()} >Logout</a>
-      <Link className="nav-link active" to="/recipe" >Create Recipes</Link>
+      <Link className="nav-link active" to="/recipe" >Create Blogs</Link>
     </>
   )
 }
@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/" >Recipes</Link>
+        <Link className="navbar-brand" to="/" >Blogs</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>

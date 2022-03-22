@@ -1,10 +1,8 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 
 
-const Recipe = ({ data }) => {
-  const { title, description } = data
-  console.log(data)
+const Recipe = ({ title, description, handleUpdate, handleDelete }) => {
   return (
     <Card className='item'>
       <Card.Body>
@@ -14,6 +12,9 @@ const Recipe = ({ data }) => {
         <Card.Text>
           {description}
         </Card.Text>  
+        <Button variant='primary' onClick={handleUpdate} >Update</Button>
+        {' '}
+        <Button variant='danger' onClick={handleDelete} >Delete</Button>
       </Card.Body>
     </Card>
   )
