@@ -1,13 +1,32 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import {login} from '../auth'
 
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [loginResponse, setLoginRespose] = useState('')
+
+  const navigate = useNavigate();
+
+
 
   const submitForm = () => {
-    console.log('submit')
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      }
+      fetch('/auth/login', requestOptions)
+        .then(res => res.json())
+        .then(data => {
+          setLoginRespose('Logged in')
+          login(data.access_token)
+          navigate('/')
+        })
+        .catch(error => console.log('error', error))
 
     setUsername('')
     setPassword('')
@@ -42,6 +61,7 @@ const Login = () => {
             </small>
           </Form.Group>
         </form>
+        <h3 style={{ color: 'cornflowerblue' }}>{loginResponse}</h3>
       </div>
     </div>
   )

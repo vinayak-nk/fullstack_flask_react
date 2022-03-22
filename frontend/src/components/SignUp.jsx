@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form";
@@ -6,9 +6,24 @@ import { useForm } from "react-hook-form";
 const SignUp = () => {
   const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
 
+  const [serverResponse, setServerRespose] = useState('')
+
   const submitForm = (data) => {
     console.log('submit', data)
     reset()
+
+    const { username, email, password, confirmPassword } = data
+    if (password === confirmPassword) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+      }
+      fetch('/auth/signup', requestOptions)
+        .then(res => res.json())
+        .then(data => setServerRespose(data.message))
+        .catch(error => console.log('error', error))
+    } else alert('passwords do not match')
   }
 
   console.log(watch('username'))
@@ -27,7 +42,7 @@ const SignUp = () => {
           </Form.Group>
           {errors.username && <span style={{ color: 'red' }} >User name is required</span>}
           <br />
-          {errors.username?.type=="maxLength" && <span style={{ color: 'red' }} >max length exceded</span>}
+          {errors.username?.type==="maxLength" && <span style={{ color: 'red' }} >max length exceded</span>}
           <Form.Group>
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" placeholder='enter your email' {...register("email", {required:true, maxLength:80})} />
@@ -59,7 +74,8 @@ const SignUp = () => {
               <Link to='/login'>Click here</Link>
             </small>
           </Form.Group>
-
+          <br />
+          <h3 style={{ color: 'cornflowerblue' }}>{serverResponse}</h3>
         </form>
       </div>
     </div>
