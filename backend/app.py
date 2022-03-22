@@ -4,10 +4,10 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
-from models import Recipe, User
+from models import Blog, User
 from exts import db
 from auth import auth_ns
-from services import recipe_ns
+from services import blog_ns
 # from config import DevConfig
 # from routes import init_app_route
 
@@ -23,19 +23,19 @@ def create_app(config):
   JWTManager(app)
 
   api = Api(app, doc='/docs')
-  api.add_namespace(recipe_ns)
+  api.add_namespace(blog_ns)
   api.add_namespace(auth_ns)
   
   @app.shell_context_processor
   def make_shell_context():
     return {
       'db': db,
-      'Recipe': Recipe,
+      'Blog': Blog,
       'user': User,
     }
 
   return app
 
-if __name__ == '__main__':
-  app.run()
-  # app.run(debug = False, host='0.0.0.0', port= '9090')
+# if __name__ == '__main__':
+#   app.run()
+# app.run(debug = False, host='0.0.0.0', port= '9090')

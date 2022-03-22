@@ -1,7 +1,7 @@
 
 @host = http://127.0.0.1:5000/
-@url1 = api/recipes
-@url2 = api/recipe
+@url1 = api/blogs
+@url2 = api/blog
 @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0Nzg1MjU1OSwianRpIjoiNmZiZjA5MWUtOTkyYy00ZmJlLTk0NTctMGM2NjQwMjVkZGRlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InZuazEiLCJuYmYiOjE2NDc4NTI1NTksImV4cCI6MTY0Nzg1MzQ1OX0.JCdk_440EzyMf9XUpf2T6r1-_wSRZ67A3K__mGN5d4A
 ######################################
 POST {{host}}/auth/signup

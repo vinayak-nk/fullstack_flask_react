@@ -2,20 +2,21 @@ from datetime import datetime
 from exts import db
 
 """
-class Recipe:
+class Blog:
   id: int, primary key
   title: str
   description: str (text)
   
 """
 
-class Recipe(db.Model):
+class Blog(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
   title = db.Column(db.String(), nullable=False)
   description = db.Column(db.Text(), nullable=False)
+  date = db.Column(db.Date(), nullable=False, default=datetime.utcnow)
   
   def __repr__(self) -> str:
-      return f"<Recipe {self.title} >"
+      return f"<Blog {self.title} >"
 
   def save(self):
     db.session.add(self)
@@ -28,6 +29,7 @@ class Recipe(db.Model):
   def update(self, title, description):
     self.title = title
     self.description = description
+    self.date = datetime.utcnow
     db.session.commit()
 
 

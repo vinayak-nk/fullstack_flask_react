@@ -24,7 +24,7 @@ const CreateRecipe = () => {
         },
         body: JSON.stringify({ title, description })
       }
-      fetch('/api/recipes', requestOptions)
+      fetch('/api/blogs', requestOptions)
         .then(res => res.json())
         .then(data => setServerRespose(data.message))
       .catch(error => console.log('error', error))

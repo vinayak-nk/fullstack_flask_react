@@ -34,7 +34,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/recipe" element={<CreateRecipe />} />
+          <Route path="/blog" element={<CreateRecipe />} />
         </Routes>
       </div>
     </BrowserRouter>

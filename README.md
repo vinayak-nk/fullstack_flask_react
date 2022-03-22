@@ -55,7 +55,7 @@ recipe_model = api.model(
   "Recipe",
     {
       'id': fields.Integer(),
-      'title': fields.String(),
+      'title': fields.String(),exit()
       'description': fields.String()
     }
 )
@@ -160,3 +160,21 @@ class Signup(Resource):
 
   >> @jwt_required()
 ==============================================================================================
+
+
+DB
+----
+
+flask shell
+from app import create_app
+from exts import db
+from config import DevConfig
+
+db.create_all(app=create_app(DevConfig))
+
+
+  flask shell
+
+  flask db init --> generate migrations folder
+  flask db migrate -m "added user table"
+  flask db upgrade

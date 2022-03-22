@@ -29,7 +29,7 @@ const LoggedInHome = () => {
           },
           body: JSON.stringify({ title, description })
         }
-        fetch(`/api/recipe/${blogID}`, requestOptions)
+        fetch(`/api/blog/${blogID}`, requestOptions)
           .then(res => res.json())
           .then(data => {
             console.log(data)
@@ -80,7 +80,7 @@ const LoggedInHome = () => {
         'Authorization': `Bearer ${JSON.parse(token)}`
       },
     }
-    fetch(`/api/recipe/${id}`, requestOptions)
+    fetch(`/api/blog/${id}`, requestOptions)
       .then(res => res.json())
       .then(data => {
         console.log(data)
@@ -90,7 +90,7 @@ const LoggedInHome = () => {
   }
 
   useEffect(() => {
-    fetch('/api/recipes')
+    fetch('/api/blogs')
       .then(res => res.json())
       .then(data => {
         setBlogs(data)
@@ -99,7 +99,7 @@ const LoggedInHome = () => {
   }, [])
 
   return (
-    <div className='recipes'>
+    <div className='blogs'>
       <Modal show={show} size="lg" onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Update Blog</Modal.Title>

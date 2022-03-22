@@ -7,7 +7,7 @@ const LoggedInLinks = () => {
     <>
       <Link className="nav-link active" to="/" aria-current="page" href="#">Home</Link>
       <a className="nav-link active" href='#' onClick={() => logout()} >Logout</a>
-      <Link className="nav-link active" to="/recipe" >Create Blogs</Link>
+      <Link className="nav-link active" to="/blog" >Create Blogs</Link>
     </>
   )
 }
