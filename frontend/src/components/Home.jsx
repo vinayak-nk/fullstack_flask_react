@@ -2,17 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import { useAuth } from '../auth'
-
-const Recipe = ({ data }) => {
-  const { id, title, description } = data
-  console.log(data)
-  return (
-    <div className='recipe'>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </div>
-  )
-}
+import Recipe from './Recipe'
 
 const LoggedInHome = () => {
   const [recipes, setRecipes] = useState([])
@@ -29,7 +19,6 @@ const LoggedInHome = () => {
   return (
     <div className='recipes'>
       <h1>List of Recipes</h1>
-      <br />
       {recipes.map((recipe) => <Recipe key={recipe.id} data={recipe} />)}
 
     </div>
